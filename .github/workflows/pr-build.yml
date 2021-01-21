@@ -36,8 +36,9 @@ jobs:
     # - name: Run backend tests
     #   run: ./mvnw test --no-transfer-progress
     - name: Run coveralls
-      run: npm run coveralls-copy
+      run: cat target/test-results/lcov.info
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: target/test-results/lcov.info
