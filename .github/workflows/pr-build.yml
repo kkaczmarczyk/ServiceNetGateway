@@ -35,6 +35,8 @@ jobs:
     #   run: npm test
     # - name: Run backend tests
     #   run: ./mvnw test --no-transfer-progress
+    - name: Run coveralls
+      run: npm run coveralls-copy
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
