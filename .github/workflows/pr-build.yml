@@ -23,20 +23,19 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+    - name: Cache node_modules dependencies
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-maven-dep
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
     - name: Install Maven dependencies (if new ones were added)
       run: ./mvnw dependency:go-offline --no-transfer-progress
     - name: Run backend&frontend tests
       run: ./mvnw -Pprod clean verify --no-transfer-progress
-    # - name: Install node and npm dependencies
-    #   run: ./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-npm@'install node and npm'
-    # - name: Install node modules
-    #   run: ./mvnw com.github.eirslett:frontend-maven-plugin:npm@'npm install'
-    # - name: Maven clean
-    #   run: ./mvnw clean
-    # - name: Run frontend tests
-    #   run: npm test
-    # - name: Run backend tests
-    #   run: ./mvnw test --no-transfer-progress
     - name: Run coveralls
       run: cat target/test-results/lcov.info
     - name: Coveralls
