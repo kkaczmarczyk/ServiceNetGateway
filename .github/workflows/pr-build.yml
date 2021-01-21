@@ -33,16 +33,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-modules-
 
-    - name: Cache node executable
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-node-dep
-      with:
-        path: node
-        key: ${{ runner.os }}-node-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
     - name: Install Maven dependencies (if new ones were added)
       run: ./mvnw dependency:go-offline --no-transfer-progress
 
